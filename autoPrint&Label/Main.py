@@ -92,20 +92,11 @@ def on_modified(event):
 my_event_handler.on_created = on_modified
 my_event_handler.on_modified = on_modified
 
-RECURSIVE = True
+# OH GOD DON'T CHANGE THIS!!!
+RECURSIVE = False
 my_observer = Observer()
 my_observer.schedule(my_event_handler, folder_path.get(), recursive=RECURSIVE)
 my_observer.start()
-
-
-def getDocSize(path):
-    reader = PdfReader(path)
-    box = reader.pages[0].mediabox
-    print(box)
-    if box.width == 283.0 or box.width == 425.19999999999999:
-        return "LBL"
-    else:
-        return "A4P"
 
 
 while True:
@@ -116,13 +107,16 @@ while True:
             path = doc[0]
             print("printing doc:", path)
             # get doc size letter or a4
-            pageSize = getDocSize(path)
+            pageSize = qrlabelib.getDocSize(path)
             if (pageSize == "LBL"):
                 # add QR
                 if makeqr.get():
-                    qrlabelib.genNew(path)
-                # print
-                printlib.print_file(lbSet.get(), path)
+                    generated_pdfs = qrlabelib.generateLabels(path)
+                    # print
+                    for file in generated_pdfs:
+                        printlib.print_file(lbSet.get(), file)
+                else:
+                    printlib.print_file(lbSet.get(), path)
             else:
                 printlib.print_file(a4Set.get(), path)
             # don't double print
