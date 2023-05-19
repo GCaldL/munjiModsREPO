@@ -4,12 +4,15 @@ from tkinter import *
 from tkinter import filedialog
 from pypdf import PdfReader
 
-import print as pt
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-import convert_shipping_labels as qrlabelib
 import time
 import os
+
+# My LIBS
+
+import QRLABEL as qrlabelib
+import PRINTERS as printlib
 
 
 def browse_button():
@@ -34,7 +37,7 @@ folder_path = StringVar()
 folder_path.set("C:/Users/info/Downloads")
 
 options = []
-printers = pt.getPrinters()
+printers = printlib.getPrinters()
 for printer in printers:
     options.append(printer[1].split(",")[0])
 
@@ -119,9 +122,9 @@ while True:
                 if makeqr.get():
                     qrlabelib.genNew(path)
                 # print
-                pt.print_file(lbSet.get(), path)
+                printlib.print_file(lbSet.get(), path)
             else:
-                pt.print_file(a4Set.get(), path)
+                printlib.print_file(a4Set.get(), path)
             # don't double print
             doc[1] = True
             # update GUI
