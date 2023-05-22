@@ -11,7 +11,7 @@ def getDocSize(path):
     reader = PdfReader(path)
     box = reader.pages[0].mediabox
     print(box)
-    if box.width == 283.0 or box.width == 425.19999999999999:
+    if box.width < 460:
         return "LBL"
     else:
         return "A4P"
@@ -20,39 +20,6 @@ def getDocSize(path):
 def get_file_name(path):
     """Extract the base name of the file from the path."""
     return os.path.basename(path)
-
-
-def genNew(path):
-    """Generate a new QR code for a given file."""
-    id = get_file_name(path).split(".")[0]
-    doc = fitz.open(path)
-
-    for page in doc:
-        zoom = 4    # zoom factor
-        mat = fitz.Matrix(zoom, zoom)
-        pix = page.get_pixmap(matrix=mat)  # render page to an image
-        pix.save(page + ".png")
-
-    img = qrcode.make(str(id)+"/")  # Generate QR code
-    img.save(str(id)+".png")
-
-    # Open the images
-    with pillow.open(r"temp.png") as img1, pillow.open(str(id)+".png") as QRCode:
-        # No transparency mask specified,
-        # simulating an raster overlay
-        img1.paste(QRCode, (800, 1440))
-        img1.convert('RGB')
-        img1.save(path)  # Save the modified image
-
-    with open(path, "rb") as file:
-        pdf = PyPDF2.PdfReader(file)
-        page0 = pdf.pages[0]
-        # float representing scale factor - this happens in-place
-        page0.scale_by(0.25)
-        writer = PyPDF2.PdfWriter()  # create a writer to save the updated results
-        writer.add_page(page0)
-        with open(path, "wb") as output:
-            writer.write(output)
 
 
 def generateLabels(path):

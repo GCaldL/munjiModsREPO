@@ -114,10 +114,13 @@ while True:
                     generated_pdfs = qrlabelib.generateLabels(path)
                     # print
                     for file in generated_pdfs:
+                        print("printing LBL")
                         printlib.print_file(lbSet.get(), file)
                 else:
+                    print("printing")
                     printlib.print_file(lbSet.get(), path)
             else:
+                print("printing")
                 printlib.print_file(a4Set.get(), path)
             # don't double print
             doc[1] = True
