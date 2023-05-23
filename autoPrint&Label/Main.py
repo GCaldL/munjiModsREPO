@@ -13,6 +13,10 @@ import os
 
 import QRLABEL as qrlabelib
 import PRINTERS as printlib
+import ctypes
+
+myappid = 'mycompany.myproduct.subproduct.version'  # arbitrary string
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 def browse_button():
@@ -22,14 +26,9 @@ def browse_button():
     folder_path.set(filename)
     print(filename)
 
-
-def somfunc():
-    print("I'm doing something lol")
-
-
 root = Tk()
 root.title("Auto Print")
-# root.iconbitmap("munji.ico")
+root.iconbitmap(default="munji.ico")
 root.attributes('-topmost', True)
 
 # settings
