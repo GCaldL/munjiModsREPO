@@ -6,12 +6,12 @@ import GUIs
 import configManager
 
 # consts
-configINI = 
-
+configINI = "/config.ini"
 
 # init
-setings = SettingsManager.get()
-
-
+config = configManager.get()
 
 # main loop
+
+while True:
+    openDocs = folderMonitor.getCurrent()
