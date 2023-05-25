@@ -32,16 +32,10 @@ def printLabel():
 
 
 def getOrder():
-    ahk.mouse_position = positions['searchbar']
-    ahk.click()
-
+    ahk.key_press('Enter')
     time.sleep(1)
     ahk.mouse_position = positions['orderpos']
     ahk.click()
-
-
-def doNULL():
-    print("wtf")
 
 
 positions = {
@@ -51,7 +45,6 @@ positions = {
 
 ahk = AHK()
 ahk.add_hotkey('.', callback=setLocations)
-ahk.add_hotkey('\\', callback=getOrder)
-ahk.add_hotkey('/', callback=doNULL)
+ahk.add_hotkey('/', callback=getOrder)
 ahk.start_hotkeys()
 ahk.block_forever()

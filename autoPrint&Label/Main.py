@@ -98,6 +98,13 @@ makeqr_checkbox = Checkbutton(master=root, text='Add QR Code to Labels',
                               variable=makeqr, onvalue=True, offvalue=False)
 makeqr_checkbox.grid(row=3, column=2)
 
+# pause printing
+pausePrinting = tk.IntVar()
+pausePrinting.set(False)
+pp_checkbox = Checkbutton(master=root, text='Pause Printing',
+                          variable=pausePrinting, onvalue=True, offvalue=False)
+pp_checkbox.grid(row=4, column=2)
+
 # other settings lol
 print_queue = []
 # hotdog watchdog stuff
@@ -128,7 +135,7 @@ while True:
         break
     for doc in print_queue:
         # os.path.getmtime('C:/Users/info/Downloads/sample (2).pdf)
-        if doc[1] == False and time.time() - os.path.getmtime(doc[0]) > 1:
+        if doc[1] == False and time.time() - os.path.getmtime(doc[0]) > 1 and pausePrinting.get() == False:
             # print doc
             path = doc[0]
             print("printing doc:", path)
