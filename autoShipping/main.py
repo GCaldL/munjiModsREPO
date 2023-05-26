@@ -45,6 +45,6 @@ positions = {
 
 ahk = AHK()
 ahk.add_hotkey('.', callback=setLocations)
-ahk.add_hotkey('/', callback=getOrder)
+ahk.add_hotkey('/', callback=printLabel)
 ahk.start_hotkeys()
 ahk.block_forever()
