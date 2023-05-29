@@ -38,9 +38,9 @@ while True:
     new_documents = fileManager.newFiles()
     # Everything that was in the folder before start??
     for doc in new_documents:
-        if logManager.doesEntryExist(doc.path) == False:
+        if logManager.doesEntryExist(doc.path) is False:
             documents += logManager.newLogEntry(doc.path, 0, False, True)
 
     for doc in documents:
-        if doc.labeled == False:
+        if doc.labeled is False:
             labeledDOC = labelMaker.generateLabels(doc.path)
