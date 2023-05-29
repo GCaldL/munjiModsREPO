@@ -1,20 +1,19 @@
-import re
-import tkinter as tk
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
-from pypdf import PdfReader
-
-from watchdog.observers import Observer
-from watchdog.events import PatternMatchingEventHandler
-import time
 import os
+import time
+from watchdog.events import PatternMatchingEventHandler
+from watchdog.observers import Observer
+from pypdf import PdfReader
+from tkinter import messagebox
+from tkinter import filedialog
+from tkinter import *
+import tkinter as tk
+import re
+import ctypes
+
+import libraries.PRINTERS as printlib
+import libraries.QRLABEL as qrlabelib
 
 # My LIBS
-
-import QRLABEL as qrlabelib
-import PRINTERS as printlib
-import ctypes
 
 myappid = 'mycompany.myproduct.subproduct.version'  # arbitrary string
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)

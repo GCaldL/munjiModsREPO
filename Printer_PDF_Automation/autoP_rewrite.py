@@ -1,15 +1,18 @@
 # imports
-import printerManager
-import labelMaker
-import GUIs
-import configManager
-import logManager
-import fileManager
+import configparser
+import lib.logManager as logM
+import lib.printerManager
+import lib.labelMaker
+import lib.fileManager
+import lib.GUIs
 
 # consts
 CONFIG = "/config.ini"
-LOG = "/log.json"
+# a4_printer = "A4 Office Printer (BrotherMFC-J6730DW)"
+# label_printer = "Office Label Printer (ZDes-GK420d)"
+# root_folder = "C:/Users/info/Downloads"
 
+LOG = "/log.json"
 # ____path___________|_printed__|_labeled_|__found__|
 # __labels.pdf_+ {___|______0___|__False__|__True___|
 # _/labels/4215.pdf__|______0___|__False__|__True___|
@@ -19,14 +22,18 @@ LOG = "/log.json"
 # __4217.pdf_________|______3___|__True___|__False__|
 
 # init
-config = configManager.get(CONFIG)
+config = configparser.ConfigParser()
+config.read(CONFIG)
+printers = [config["a4_printer"], config["label_printer"]]
+root_folder = config["root_folder"]
+
 # docs in folder that were already there
-documents = logManager.readLog(LOG)
+documents = logM.readLog(LOG)
 for doc in documents:
     if fileManager.isValidPath(config.root_folder + doc.path):
-        doc.found = True
+        doc[3] = True
     else:
-        doc.found = False
+        doc[3] = False
 
 
 fileManager.initWatchDog(config.root_folder)
