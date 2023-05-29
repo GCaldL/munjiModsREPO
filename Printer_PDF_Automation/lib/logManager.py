@@ -12,7 +12,7 @@ def readLog(path):
 
 
 def writeLog(path, dictionary):
-    with open(path, 'w') as csv_file:
+    with open(path, 'w', newline='') as csv_file:
         writer = csv.writer(csv_file)
         writer.writerow(["path", "printed", "labeled", "found"])
         for data in dictionary:
@@ -24,7 +24,7 @@ def writeLog(path, dictionary):
 
 
 def writeLogAppend(path, dictionary):
-    with open(path, 'a') as csv_file:
+    with open(path, 'a', newline='') as csv_file:
         writer = csv.writer(csv_file)
         for data in dictionary:
             values = [data["path"], data["printed"],
@@ -33,6 +33,4 @@ def writeLogAppend(path, dictionary):
             writer.writerow(values)
     return
 
-
 new = readLog("log.csv")
-writeLog("log.csv", [new[0]])

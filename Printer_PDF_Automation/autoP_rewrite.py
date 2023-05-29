@@ -1,9 +1,9 @@
 # imports
 import configparser
-import lib.logManager as logM
+import lib.logManager as logManager
+import lib.fileManager as fileManager
 import lib.printerManager
 import lib.labelMaker
-import lib.fileManager
 import lib.GUIs
 
 # consts
@@ -28,15 +28,14 @@ printers = [config["a4_printer"], config["label_printer"]]
 root_folder = config["root_folder"]
 
 # docs in folder that were already there
-documents = logM.readLog(LOG)
+documents = logManager.readLog(LOG)
 for doc in documents:
-    if fileManager.isValidPath(config.root_folder + doc.path):
-        doc[3] = True
+    if fileManager.isValidPath(root_folder + doc.path):
+        doc["found"] = True
     else:
-        doc[3] = False
+        doc["found"] = False
 
-
-fileManager.initWatchDog(config.root_folder)
+fileManager.initWatchDog(root_folder)
 
 # main loop
 while True:
