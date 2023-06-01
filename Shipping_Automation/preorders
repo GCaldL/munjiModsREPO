@@ -1,0 +1,71 @@
+from ahk import AHK
+import time
+import pyautogui
+
+
+def setMouseCoords():
+    global coords
+    mousePos = ahk.mouse_position
+    coords += [ahk.mouse_position]
+    tooltip = "new coord set:" + \
+        str(mousePos[0]) + " " + str(mousePos[1])
+    ahk.show_tooltip(
+        tooltip, x=ahk.mouse_position[0], y=ahk.mouse_position[1])
+    time.sleep(2)
+    ahk.hide_tooltip()
+
+
+def getorder():
+    global orderList
+    global index
+
+    ahk.mouse_position = coords[0]
+    ahk.click()
+    ahk.key_press('Tab')
+    ahk.type(orderList[index])
+    ahk.key_press('Enter')
+    time.sleep(0.5)
+    ahk.mouse_position = coords[1]
+    ahk.click()
+    ahk.mouse_position = coords[2]
+    time.sleep(2)
+    offset = -10000
+    pyautogui.scroll(offset)
+    ahk.click()
+    # ahk.key_press('Enter')
+
+    index += 1
+
+
+def setEXPR():
+    global orderList
+    global index
+
+    initPOS = ahk.mouse_position
+    print(initPOS)
+    ahk.click()
+    time.sleep(0.5)
+    ahk.mouse_position = coords[0]
+    time.sleep(2)
+    # offset = -10000
+    # pyautogui.scroll(offset)
+    ahk.click()
+    time.sleep(2)
+    ahk.mouse_position = coords[1]
+    ahk.click()
+    ahk.mouse_position = (initPOS[0], initPOS[1] + 45)
+    # ahk.key_press('Enter')
+
+    index += 1
+
+
+index = 0
+orderList = ["41966", "41970", "41971", "41972", "41976", "41978", "41980", "41982", "41983", "41988", "41990", "41995", "41998", "42003", "42005", "42007", "42010", "42011", "42022", "42023", "42026",
+             "42027", "42029", "42036", "42037", "42038", "42039", "42040", "42043", "42044", "42046", "42048", "42052", "42059", "42061", "42063", "42064", "42066", "42075", "42078", "42080", "42081", "42083", "42084"]
+coords = []
+
+ahk = AHK()
+ahk.add_hotkey('.', callback=setMouseCoords)
+ahk.add_hotkey('/', callback=setEXPR)
+ahk.start_hotkeys()
+ahk.block_forever()
